@@ -49,7 +49,7 @@ export default function UploadLessonScreen({ navigation }: Props) {
     try {
       const uploaded = await lessonsApi.upload(file);
 
-      await lessonsApi.generate(uploaded.id, uploaded.title, uploaded.extractedText);
+      await lessonsApi.generate(uploaded.id, uploaded.title, uploaded.text ?? '');
 
       setStep('done');
       Alert.alert(
