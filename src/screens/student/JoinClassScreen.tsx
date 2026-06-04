@@ -28,7 +28,7 @@ export default function JoinClassScreen({ navigation }: Props) {
     setLoading(true);
     try {
       const cls = await classesApi.join(code.trim().toUpperCase());
-      Alert.alert('✅ Turma acessada!', `Bem-vindo(a) à turma "${cls.name}"!`, [
+      Alert.alert('Turma acessada!', `Bem-vindo(a) à turma "${cls.name}"!`, [
         { text: 'OK', onPress: () => navigation.goBack() },
       ]);
     } catch (e: any) {
@@ -41,7 +41,6 @@ export default function JoinClassScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.emoji}>🏫</Text>
         <Text style={styles.title}>Entrar em uma turma</Text>
         <Text style={styles.subtitle}>
           Peça o código de 6 caracteres ao seu professor

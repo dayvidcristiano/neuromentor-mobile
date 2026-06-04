@@ -41,7 +41,7 @@ export default function ManageClassesScreen() {
       const created = await classesApi.create(newName.trim());
       setClasses((prev) => [created, ...prev]);
       setNewName('');
-      Alert.alert('✅ Turma criada!', `Código: ${created.code}\n\nCompartilhe com seus alunos.`);
+      Alert.alert('Turma criada!', `Código: ${created.code}\n\nCompartilhe com seus alunos.`);
     } catch (e: any) {
       Alert.alert('Erro', e.message);
     } finally {

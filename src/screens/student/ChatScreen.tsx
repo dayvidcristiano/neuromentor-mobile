@@ -71,7 +71,7 @@ export default function ChatScreen({ route }: Props) {
         const updated = [...prev];
         updated[assistantIdx] = {
           role: 'assistant',
-          content: '❌ Não consegui responder. Tente novamente.',
+          content: ' Não consegui responder. Tente novamente.',
         };
         return updated;
       });
@@ -86,7 +86,6 @@ export default function ChatScreen({ route }: Props) {
       <View style={[styles.msgRow, isUser && styles.msgRowUser]}>
         {!isUser && (
           <View style={styles.avatar}>
-            <Text style={{ fontSize: 16 }}>🧠</Text>
           </View>
         )}
         <View style={[styles.bubble, isUser ? styles.bubbleUser : styles.bubbleAssistant]}>

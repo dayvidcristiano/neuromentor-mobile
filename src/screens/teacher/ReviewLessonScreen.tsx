@@ -18,9 +18,9 @@ type Props = {
 };
 
 const STATUS_LABEL: Record<string, string> = {
-  pending: '⏳ Pendente',
-  approved: '✅ Aprovado',
-  rejected: '❌ Rejeitado',
+  pending: 'Pendente',
+  approved: 'Aprovado',
+  rejected: 'Rejeitado',
 };
 
 const STATUS_COLOR: Record<string, string> = {
@@ -120,7 +120,7 @@ export default function ReviewLessonScreen({ route }: Props) {
               {updating === item.id ? (
                 <ActivityIndicator color="#fff" size="small" />
               ) : (
-                <Text style={styles.approveBtnText}>✅ Aprovar</Text>
+                <Text style={styles.approveBtnText}>Aprovar</Text>
               )}
             </TouchableOpacity>
           )}
@@ -130,7 +130,7 @@ export default function ReviewLessonScreen({ route }: Props) {
               onPress={() => setStatus(item.id, 'Rejected')}
               disabled={updating === item.id}
             >
-              <Text style={styles.rejectBtnText}>❌ Rejeitar</Text>
+              <Text style={styles.rejectBtnText}>Rejeitar</Text>
             </TouchableOpacity>
           )}
           {item.status !== 'pending' && (
@@ -139,7 +139,7 @@ export default function ReviewLessonScreen({ route }: Props) {
               onPress={() => setStatus(item.id, 'Pending')}
               disabled={updating === item.id}
             >
-              <Text style={styles.pendingBtnText}>↩ Voltar a pendente</Text>
+              <Text style={styles.pendingBtnText}>Voltar a pendente</Text>
             </TouchableOpacity>
           )}
         </View>

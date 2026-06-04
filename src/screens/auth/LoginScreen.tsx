@@ -45,7 +45,6 @@ export default function LoginScreen({ navigation }: Props) {
       <View style={styles.inner}>
         {/* Logo / Brand */}
         <View style={styles.brand}>
-          <Text style={styles.logo}>🧠</Text>
           <Text style={styles.title}>NeuroMentor</Text>
           <Text style={styles.subtitle}>Aprendizado assistido por IA</Text>
         </View>

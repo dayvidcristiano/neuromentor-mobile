@@ -56,7 +56,7 @@ export default function TeacherHomeScreen({ navigation }: Props) {
           {/* Header */}
           <View style={styles.header}>
             <View>
-              <Text style={styles.greeting}>Olá, Prof. {user?.name?.split(' ')[0]} 👋</Text>
+              <Text style={styles.greeting}>Olá, Prof. {user?.name?.split(' ')[0]} </Text>
               <Text style={styles.role}>Professor{user?.subject ? ` · ${user.subject}` : ''}</Text>
             </View>
             <TouchableOpacity onPress={logout} style={styles.logoutBtn}>
@@ -88,14 +88,14 @@ export default function TeacherHomeScreen({ navigation }: Props) {
               style={styles.actionBtn}
               onPress={() => navigation.navigate('UploadLesson')}
             >
-              <Text style={styles.actionIcon}>📤</Text>
+              <Text style={styles.actionIcon}></Text>
               <Text style={styles.actionText}>Enviar aula</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.actionBtn}
               onPress={() => navigation.navigate('ManageClasses')}
             >
-              <Text style={styles.actionIcon}>🏫</Text>
+              <Text style={styles.actionIcon}></Text>
               <Text style={styles.actionText}>Turmas</Text>
             </TouchableOpacity>
           </View>
@@ -114,7 +114,7 @@ export default function TeacherHomeScreen({ navigation }: Props) {
             activeOpacity={0.8}
           >
             <View style={styles.lessonIcon}>
-              <Text style={{ fontSize: 22 }}>📄</Text>
+              <Text style={{ fontSize: 22 }}></Text>
             </View>
             <View style={styles.lessonInfo}>
               <Text style={styles.lessonTitle}>{item.title}</Text>
@@ -131,7 +131,7 @@ export default function TeacherHomeScreen({ navigation }: Props) {
       }}
       ListEmptyComponent={
         <View style={styles.emptyCard}>
-          <Text style={styles.emptyEmoji}>📂</Text>
+          <Text style={styles.emptyEmoji}></Text>
           <Text style={styles.emptyText}>Nenhuma aula ainda.</Text>
           <TouchableOpacity
             style={styles.uploadBtn}

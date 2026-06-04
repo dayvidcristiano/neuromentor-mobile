@@ -48,7 +48,7 @@ export default function StudentHomeScreen({ navigation }: Props) {
     if (!code.trim()) return;
     try {
       await classesApi.join(code.trim().toUpperCase());
-      Alert.alert('✅ Sucesso', 'Você entrou na turma!');
+      Alert.alert('Sucesso', 'Você entrou na turma!');
       load();
     } catch (e: any) {
       Alert.alert('Erro', e.message);
@@ -71,7 +71,7 @@ export default function StudentHomeScreen({ navigation }: Props) {
           {/* Header */}
           <View style={styles.header}>
             <View>
-              <Text style={styles.greeting}>Olá, {user?.name?.split(' ')[0]} 👋</Text>
+              <Text style={styles.greeting}>Olá, {user?.name?.split(' ')[0]}</Text>
               <Text style={styles.role}>Aluno</Text>
             </View>
             <TouchableOpacity onPress={logout} style={styles.logoutBtn}>
@@ -81,8 +81,7 @@ export default function StudentHomeScreen({ navigation }: Props) {
 
           {/* XP Card */}
           <View style={styles.xpCard}>
-            <Text style={styles.xpEmoji}>⚡</Text>
-            <View>
+                                                                                                                                                                                                                                                                                                                                                       <View>
               <Text style={styles.xpTitle}>Sua jornada de aprendizado</Text>
               <Text style={styles.xpSub}>Complete módulos para ganhar XP</Text>
             </View>

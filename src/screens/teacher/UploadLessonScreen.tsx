@@ -47,15 +47,13 @@ export default function UploadLessonScreen({ navigation }: Props) {
     setStep('generating');
 
     try {
-      // 1. Upload e extração de texto
       const uploaded = await lessonsApi.upload(file);
 
-      // 2. Gerar módulos com IA
       await lessonsApi.generate(uploaded.id, uploaded.title, uploaded.extractedText);
 
       setStep('done');
       Alert.alert(
-        '✅ Aula criada!',
+        'Aula criada!',
         'Os módulos foram gerados. Acesse a aula para revisar e aprovar cada módulo.',
         [{ text: 'Ver aulas', onPress: () => navigation.goBack() }]
       );
@@ -110,7 +108,7 @@ export default function UploadLessonScreen({ navigation }: Props) {
             <Text style={styles.uploadBtnText}>Processando...</Text>
           </View>
         ) : (
-          <Text style={styles.uploadBtnText}>🚀 Enviar e Gerar Módulos</Text>
+          <Text style={styles.uploadBtnText}>Enviar e Gerar Módulos</Text>
         )}
       </TouchableOpacity>
     </ScrollView>
