@@ -97,10 +97,10 @@ export const classesApi = {
   delete: (id: string): Promise<null> =>
     apiFetch(`/api/classes/${id}`, { method: 'DELETE' }),
 
-  addLesson: (classId: string, lessonId: string): Promise<null> =>
+  addLesson: (classId: string, lessonId: string, title: string): Promise<null> =>
     apiFetch(`/api/classes/${classId}/lessons`, {
       method: 'POST',
-      body: JSON.stringify({ lessonId }),
+      body: JSON.stringify({ lessonId, title }),
     }),
 
   join: (code: string): Promise<ClassRoom> =>
