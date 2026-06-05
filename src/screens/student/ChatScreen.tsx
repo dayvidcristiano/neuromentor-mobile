@@ -27,7 +27,7 @@ export default function ChatScreen({ route }: Props) {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: `Olá! Sou a **Nara**, sua mentora de IA. Estou aqui para te ajudar com "${title}". O que você quer aprender hoje? 🎓`,
+      content: `Ola! Sou a Nara, sua mentora de IA. Estou aqui para te ajudar com "${title}". O que voce quer aprender hoje?`,
     },
   ]);
   const [input, setInput] = useState('');
@@ -35,9 +35,10 @@ export default function ChatScreen({ route }: Props) {
   const listRef = useRef<FlatList>(null);
 
   const sendMessage = async () => {
+    console.log('sendMessage chamado', { input, streaming, isAiEnabled: user?.isAiEnabled });
     if (!input.trim() || streaming) return;
     if (!user?.isAiEnabled) {
-      Alert.alert('IA desabilitada', 'Peça ao seu professor para habilitar o acesso à IA.');
+      Alert.alert('IA desabilitada', 'Peca ao seu professor para habilitar o acesso a IA.');
       return;
     }
 
@@ -47,7 +48,6 @@ export default function ChatScreen({ route }: Props) {
     setInput('');
     setStreaming(true);
 
-    // Add placeholder for assistant response
     const assistantIdx = newMessages.length;
     setMessages([...newMessages, { role: 'assistant', content: '' }]);
 
@@ -67,11 +67,12 @@ export default function ChatScreen({ route }: Props) {
         }
       );
     } catch (e: any) {
+      console.log('Erro no chat:', e.message);
       setMessages((prev) => {
         const updated = [...prev];
         updated[assistantIdx] = {
           role: 'assistant',
-          content: ' Não consegui responder. Tente novamente.',
+          content: 'Nao consegui responder. Tente novamente.',
         };
         return updated;
       });
@@ -84,10 +85,7 @@ export default function ChatScreen({ route }: Props) {
     const isUser = item.role === 'user';
     return (
       <View style={[styles.msgRow, isUser && styles.msgRowUser]}>
-        {!isUser && (
-          <View style={styles.avatar}>
-          </View>
-        )}
+        {!isUser && <View style={styles.avatar} />}
         <View style={[styles.bubble, isUser ? styles.bubbleUser : styles.bubbleAssistant]}>
           <Text style={[styles.bubbleText, isUser && styles.bubbleTextUser]}>
             {item.content || (streaming ? '...' : '')}
@@ -115,7 +113,7 @@ export default function ChatScreen({ route }: Props) {
       <View style={styles.inputRow}>
         <TextInput
           style={styles.input}
-          placeholder="Pergunte algo sobre o módulo..."
+          placeholder="Pergunte algo sobre o modulo..."
           placeholderTextColor="#475569"
           value={input}
           onChangeText={setInput}

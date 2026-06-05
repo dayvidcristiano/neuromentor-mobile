@@ -113,38 +113,37 @@ export const classesApi = {
 };
 
 export const chatApi = {
-  stream: async (
-    messages: { role: string; content: string }[],
-    moduleId?: string,
-    onChunk?: (text: string) => void
-  ): Promise<string> => {
-    const token = await getToken();
-    const res = await fetch(`${API_BASE_URL}/api/chat/stream`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ messages, moduleId }),
-    });
-    if (!res.ok) throw new Error(`Erro ${res.status}`);
-    const reader = res.body?.getReader();
-    const decoder = new TextDecoder();
-    let full = '';
-    if (!reader) return full;
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      const raw = decoder.decode(value);
-      const lines = raw.split('\n').filter(Boolean);
-      for (const line of lines) {
-        if (line.startsWith('0:')) {
-          const chunk = JSON.parse(line.slice(2));
-          full += chunk;
-          onChunk?.(chunk);
-        }
-      }
+ stream: async (
+  messages: { role: string; content: string }[],
+  moduleId?: string,
+  onChunk?: (text: string) => void
+): Promise<string> => {
+  const token = await getToken();
+  const res = await fetch(`${API_BASE_URL}/api/chat/stream`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ messages, moduleId }),
+  });
+
+  if (!res.ok) throw new Error(`Erro ${res.status}`);
+
+  const text = await res.text();
+  let full = '';
+
+  const lines = text.split('\n').filter(Boolean);
+  for (const line of lines) {
+    if (line.startsWith('0:')) {
+      try {
+        const chunk = JSON.parse(line.slice(2));
+        full += chunk;
+        onChunk?.(chunk);
+      } catch { continue; }
     }
-    return full;
-  },
+  }
+
+  return full;
+},
 };
