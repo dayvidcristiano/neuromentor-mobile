@@ -8,8 +8,10 @@ import {
   ActivityIndicator,
   Alert,
   RefreshControl,
+  Image,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons';
 import { lessonsApi, classesApi } from '../../services/api';
 import { useAuthStore } from '../../stores/auth';
 import { Lesson, ClassRoom } from '../../types';
@@ -42,7 +44,7 @@ export default function TeacherHomeScreen({ navigation }: Props) {
 
   if (loading) return (
     <View style={styles.center}>
-      <ActivityIndicator size="large" color="#6366f1" />
+      <ActivityIndicator size="large" color="#7c3aed" />
     </View>
   );
 
@@ -50,17 +52,24 @@ export default function TeacherHomeScreen({ navigation }: Props) {
     <FlatList
       style={styles.container}
       contentContainerStyle={styles.content}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); load(); }} tintColor="#6366f1" />}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); load(); }} tintColor="#7c3aed" />}
       ListHeaderComponent={
         <>
           {/* Header */}
           <View style={styles.header}>
-            <View>
-              <Text style={styles.greeting}>Olá, Prof. {user?.name?.split(' ')[0]} </Text>
-              <Text style={styles.role}>Professor{user?.subject ? ` · ${user.subject}` : ''}</Text>
+            <View style={styles.headerLeft}>
+              <Image
+                source={require('../../../assets/icon.png')}
+                style={styles.logo}
+                resizeMode="contain"
+              />
+              <View>
+                <Text style={styles.greeting}>Ola, Prof. {user?.name?.split(' ')[0]}</Text>
+                <Text style={styles.role}>Professor{user?.subject ? ` · ${user.subject}` : ''}</Text>
+              </View>
             </View>
             <TouchableOpacity onPress={logout} style={styles.logoutBtn}>
-              <Text style={styles.logoutText}>Sair</Text>
+              <Ionicons name="log-out-outline" size={20} color="#6b7280" />
             </TouchableOpacity>
           </View>
 
@@ -78,24 +87,28 @@ export default function TeacherHomeScreen({ navigation }: Props) {
               <Text style={styles.statNum}>
                 {lessons.reduce((acc, l) => acc + l.modules.filter(m => m.status === 'pending').length, 0)}
               </Text>
-              <Text style={styles.statLabel}>Revisões</Text>
+              <Text style={styles.statLabel}>Revisoes</Text>
             </View>
           </View>
 
           {/* Quick actions */}
           <View style={styles.actionsRow}>
             <TouchableOpacity
-              style={styles.actionBtn}
+              style={styles.actionCard}
               onPress={() => navigation.navigate('UploadLesson')}
             >
-              <Text style={styles.actionIcon}></Text>
+              <View style={styles.actionIcon}>
+                <Ionicons name="cloud-upload-outline" size={22} color="#8b5cf6" />
+              </View>
               <Text style={styles.actionText}>Enviar aula</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.actionBtn}
+              style={styles.actionCard}
               onPress={() => navigation.navigate('ManageClasses')}
             >
-              <Text style={styles.actionIcon}></Text>
+              <View style={styles.actionIcon}>
+                <Ionicons name="people-outline" size={22} color="#8b5cf6" />
+              </View>
               <Text style={styles.actionText}>Turmas</Text>
             </TouchableOpacity>
           </View>
@@ -114,30 +127,31 @@ export default function TeacherHomeScreen({ navigation }: Props) {
             activeOpacity={0.8}
           >
             <View style={styles.lessonIcon}>
-              <Text style={{ fontSize: 22 }}></Text>
+              <Ionicons name="document-text-outline" size={20} color="#8b5cf6" />
             </View>
             <View style={styles.lessonInfo}>
               <Text style={styles.lessonTitle}>{item.title}</Text>
-              <Text style={styles.lessonMeta}>{item.modules.length} módulos · {item.sourceFileName}</Text>
+              <Text style={styles.lessonMeta}>{item.modules.length} modulos · {item.sourceFileName}</Text>
             </View>
             {pending > 0 && (
               <View style={styles.badge}>
                 <Text style={styles.badgeText}>{pending}</Text>
               </View>
             )}
-            <Text style={styles.arrow}>›</Text>
+            <Ionicons name="chevron-forward-outline" size={18} color="#374151" />
           </TouchableOpacity>
         );
       }}
       ListEmptyComponent={
         <View style={styles.emptyCard}>
-          <Text style={styles.emptyEmoji}></Text>
+          <Ionicons name="folder-open-outline" size={32} color="#374151" />
           <Text style={styles.emptyText}>Nenhuma aula ainda.</Text>
           <TouchableOpacity
             style={styles.uploadBtn}
             onPress={() => navigation.navigate('UploadLesson')}
           >
-            <Text style={styles.uploadBtnText}>+ Enviar primeiro material</Text>
+            <Ionicons name="add-outline" size={16} color="#fff" />
+            <Text style={styles.uploadBtnText}>Enviar primeiro material</Text>
           </TouchableOpacity>
         </View>
       }
@@ -146,68 +160,116 @@ export default function TeacherHomeScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f172a' },
+  container: { flex: 1, backgroundColor: '#0d1117' },
   content: { paddingHorizontal: 20, paddingTop: 56, paddingBottom: 32 },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#0f172a' },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
-  greeting: { fontSize: 22, fontWeight: '800', color: '#f1f5f9' },
-  role: { fontSize: 13, color: '#64748b', marginTop: 2 },
-  logoutBtn: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 8, backgroundColor: '#1e293b' },
-  logoutText: { color: '#f87171', fontSize: 13, fontWeight: '600' },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#0d1117' },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 },
+  headerLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  logo: { width: 32, height: 32 },
+  greeting: { fontSize: 18, fontWeight: '700', color: '#f1f5f9' },
+  role: { fontSize: 12, color: '#6b7280', marginTop: 1 },
+  logoutBtn: {
+    width: 38,
+    height: 38,
+    borderRadius: 10,
+    backgroundColor: '#1a1d2e',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.07)',
+  },
   statsRow: { flexDirection: 'row', gap: 10, marginBottom: 16 },
   statCard: {
     flex: 1,
-    backgroundColor: '#1e293b',
-    borderRadius: 14,
+    backgroundColor: '#13152b',
+    borderRadius: 12,
     padding: 14,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: 'rgba(255,255,255,0.07)',
   },
-  statNum: { fontSize: 28, fontWeight: '900', color: '#818cf8' },
-  statLabel: { fontSize: 11, color: '#64748b', marginTop: 2, fontWeight: '600' },
+  statNum: { fontSize: 26, fontWeight: '800', color: '#8b5cf6' },
+  statLabel: { fontSize: 11, color: '#6b7280', marginTop: 2, fontWeight: '600' },
   actionsRow: { flexDirection: 'row', gap: 10, marginBottom: 24 },
-  actionBtn: {
+  actionCard: {
     flex: 1,
-    backgroundColor: '#1e293b',
-    borderRadius: 14,
+    backgroundColor: '#13152b',
+    borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
-    gap: 6,
+    gap: 8,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: 'rgba(255,255,255,0.07)',
   },
-  actionIcon: { fontSize: 26 },
-  actionText: { fontSize: 12, fontWeight: '700', color: '#94a3b8' },
-  sectionTitle: { fontSize: 14, fontWeight: '700', color: '#64748b', marginBottom: 12, textTransform: 'uppercase', letterSpacing: 0.5 },
+  actionIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: 'rgba(124,58,237,0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  actionText: { fontSize: 12, fontWeight: '600', color: '#9ca3af' },
+  sectionTitle: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#6b7280',
+    marginBottom: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+  },
   lessonCard: {
-    backgroundColor: '#1e293b',
-    borderRadius: 14,
-    padding: 16,
-    marginBottom: 10,
+    backgroundColor: '#13152b',
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: 'rgba(255,255,255,0.07)',
   },
   lessonIcon: {
-    width: 48,
-    height: 48,
+    width: 42,
+    height: 42,
     borderRadius: 12,
-    backgroundColor: '#0f172a',
+    backgroundColor: 'rgba(124,58,237,0.1)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   lessonInfo: { flex: 1 },
-  lessonTitle: { fontSize: 15, fontWeight: '700', color: '#f1f5f9' },
-  lessonMeta: { fontSize: 12, color: '#64748b', marginTop: 3 },
-  badge: { backgroundColor: '#f59e0b', borderRadius: 10, minWidth: 22, height: 22, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 6 },
+  lessonTitle: { fontSize: 14, fontWeight: '600', color: '#f1f5f9' },
+  lessonMeta: { fontSize: 12, color: '#6b7280', marginTop: 2 },
+  badge: {
+    backgroundColor: '#f59e0b',
+    borderRadius: 10,
+    minWidth: 22,
+    height: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 6,
+  },
   badgeText: { color: '#000', fontWeight: '800', fontSize: 11 },
-  arrow: { fontSize: 22, color: '#334155', fontWeight: '300' },
-  emptyCard: { padding: 32, alignItems: 'center', gap: 10 },
-  emptyEmoji: { fontSize: 48 },
-  emptyText: { color: '#64748b', fontSize: 15 },
-  uploadBtn: { backgroundColor: '#6366f1', borderRadius: 10, paddingHorizontal: 20, paddingVertical: 12, marginTop: 4 },
-  uploadBtnText: { color: '#fff', fontWeight: '700', fontSize: 14 },
+  emptyCard: {
+    padding: 32,
+    alignItems: 'center',
+    gap: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.07)',
+    borderStyle: 'dashed',
+    backgroundColor: '#13152b',
+  },
+  emptyText: { color: '#6b7280', fontSize: 14 },
+  uploadBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#7c3aed',
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    marginTop: 4,
+  },
+  uploadBtnText: { color: '#fff', fontWeight: '600', fontSize: 13 },
 });
