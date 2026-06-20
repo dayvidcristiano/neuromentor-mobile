@@ -131,7 +131,7 @@ Este app consome a API [NeuroMentor Backend](https://github.com/dayvidcristiano/
 
 O APK de produção do aplicativo foi gerado via EAS Build e está disponível em:
 
-https://expo.dev/accounts/dayvidcristiano/projects/neuromentor-mobile/builds/423730f5-1181-40df-abfe-7d34902b05bc
+https://expo.dev/accounts/dayvidcristiano/projects/neuromentor-mobile/builds/74af07a6-8d06-4ca0-919e-16b307439927
 
 ### Como gerar um novo build
 
@@ -141,6 +141,18 @@ eas login
 eas build -p android --profile preview
 ```
 O processo compila o projeto na nuvem da Expo e gera um link de download do APK ao final.
+
+### Teste sem precisar criar conta
+
+**Aluno:**
+- Login: `dcvs2@cesar.school`
+- Senha: `234576`
+
+**Professor:**
+- Login: `dayvidcristianosilva@gmail.com`
+- Senha: `234576`
+
+Você também pode criar um novo usuário aluno e entrar na turma usando o código: **UV4SMD**
 
 ## Autor
 
