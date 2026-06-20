@@ -127,6 +127,20 @@ Este app consome a API [NeuroMentor Backend](https://github.com/dayvidcristiano/
 | 19/06/2026 | Entrega final + apresentação |
 
 ---
+## APK (Release)
+
+O APK de produção do aplicativo foi gerado via EAS Build e está disponível em:
+
+https://expo.dev/accounts/dayvidcristiano/projects/neuromentor-mobile/builds/423730f5-1181-40df-abfe-7d34902b05bc
+
+### Como gerar um novo build
+
+```bash
+npm install -g eas-cli
+eas login
+eas build -p android --profile preview
+```
+O processo compila o projeto na nuvem da Expo e gera um link de download do APK ao final.
 
 ## Autor
 
