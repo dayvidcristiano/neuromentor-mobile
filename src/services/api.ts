@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthResponse, Lesson, ClassRoom } from '../types';
 
-export const API_BASE_URL = 'http://192.168.1.12:5176';
+const API_BASE_URL = 'https://neuromentor-back-production.up.railway.app';
 const TOKEN_KEY = '@neuromentor:token';
 
 export const saveToken = (token: string) => AsyncStorage.setItem(TOKEN_KEY, token);
